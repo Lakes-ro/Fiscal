@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Fiscal Pro — Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <div class="wrapper">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">•</div>
+        <div class="brand-text">Fiscal Pro</div>
+      </div>
+      
+      <div class="sidebar-scroll">
+        <section class="sidebar-section">
+          <h3>Entrada de Dados (NF)</h3>
+          <div class="field">
+            <label for="regime">Regime do Emitente (Prestador)</label>
+            <select id="regime">
+              <option value="">Selecione…</option>
+              <option value="MEI">MEI</option>
+              <option value="SIMPLES">Simples Nacional</option>
+              <option value="PRESUMIDO">Lucro Presumido</option>
+              <option value="REAL">Lucro Real</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="codigo">Código LC 116 (Item de Serviço)</label>
+            <input id="codigo" placeholder="ex.: 07.02.01" />
+          </div>
+
+          <div class="field">
+            <label for="cidadePrestador">Emitente (Município/UF)</label>
+            <input id="cidadePrestador" placeholder="Ex: Lavras/MG" />
+          </div>
+
+          <div class="field">
+            <label for="cidadeExecucao">Tomador (Município/UF)</label>
+            <input id="cidadeExecucao" placeholder="Ex: Belo Horizonte/MG" />
+          </div>
+
+          <div class="field">
+            <label for="servicoTexto">Descrição do Serviço</label>
+            <input id="servicoTexto" placeholder="Ex: Pintura, Desentupimento..." />
+          </div>
+
+          <div class="field-inline">
+            <input type="checkbox" id="cessao" />
+            <label for="cessao">Cessão de Mão de Obra / Empreitada</label>
+          </div>
+
+          <button id="btnAnalisar" class="btn primary full-width">Analisar Agora</button>
+        </section>
+
+        <hr class="divider">
+
+        <section class="sidebar-section">
+          <h3>Anotações Rápidas</h3>
+          <textarea id="novoAprendizado" rows="3" placeholder="O que descobriu hoje?"></textarea>
+          <button id="btnSalvarAprendizado" class="btn full-width" style="margin-top:8px">Salvar no Mural</button>
+        </section>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-nav">
+        <nav>
+          <a href="#" id="btnFavoritos">⭐ Favoritos</a>
+          <a href="#" id="btnExcecoes">⚙️ Art. 3º</a>
+          <a href="#" id="btnExport">📥 Exportar</a>
+          <a href="#" id="btnImport">📤 Importar</a>
+          <a href="#" id="btnFontes">⚖️ Base Legal</a>
+        </nav>
+      </header>
+
+      <div class="content-container">
+        <section id="resultado" class="results hidden">
+          <div id="headline" class="headline"></div>
+
+          <div class="cards">
+            <article class="card">
+              <h3>INSS (Previdenciário)</h3>
+              <div id="prevResumo" class="pillbar"></div>
+              <ul id="prevDetalhes" class="details"></ul>
+            </article>
+            <article class="card">
+              <h3>ISS (Local do Imposto)</h3>
+              <div id="issResumo" class="pillbar"></div>
+              <ul id="issDetalhes" class="details"></ul>
+            </article>
+            <article class="card">
+              <h3>Federais (Retenção)</h3>
+              <div id="fedResumo" class="pillbar"></div>
+              <ul id="fedDetalhes" class="details"></ul>
+            </article>
+          </div>
+
+          <div class="actions" style="margin-top:24px">
+            <button id="btnSalvarCenario" class="btn">Salvar nos Favoritos</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="section-title">Meu Mural de Conhecimento</h2>
+          <div id="listaAprendizados" class="knowledge-grid"></div>
+        </section>
+
+        <section id="favoritosSec" class="panel hidden">
+          <h2 class="section-title">Cenários Salvos</h2>
+          <ul id="favoritosLista" class="details"></ul>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="dlgExcecoes" class="modal">
+    <h3>Configurar Exceções (Art. 3º)</h3>
+    <div class="grid-form">
+      <input id="exPrefixo" placeholder="Prefixo (ex: 07.02)">
+      <input id="exMotivo" placeholder="Descrição">
+      <button id="btnAddEx" class="btn primary">Adicionar</button>
+    </div>
+    <ul id="exList" class="details" style="max-height: 200px; overflow-y: auto;"></ul>
+    <button onclick="this.closest('dialog').close()" class="btn">Fechar</button>
+  </dialog>
+
+  <dialog id="dlgFontes" class="modal">
+    <h3>Base Legal Atualizada</h3>
+    <ul class="details">
+      <li><strong>INSS:</strong> IN RFB 2110/2022.</li>
+      <li><strong>ISS:</strong> Lei Complementar 116/2003.</li>
+      <li><strong>Federais:</strong> Lei 10.833/2003 e IN 459/2004.</li>
+    </ul>
+    <button onclick="this.closest('dialog').close()" class="btn">Fechar</button>
+  </dialog>
+
+  <input id="fileImport" type="file" accept="application/json" hidden />
+  <script src="script.js"></script>
+</body>
+</html>
